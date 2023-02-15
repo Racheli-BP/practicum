@@ -1,0 +1,46 @@
+mat-form-field {
+    min-width: 150px;
+    max-width: 500px;
+    width: 70%;
+    margin: 13px;
+    direction: rtl;
+}
+
+* {
+    direction: rtl;
+}
+
+form {
+    width: max-content;
+    min-width: 30vw;
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+    align-items: center;
+    direction: rtl;
+    border: 2pt solid orange;
+}
+
+.sub {
+    width: 80%;
+    margin: 5%;
+}
+
+.res {
+    margin: 7%;
+    background-color: orange;
+}
+
+form form {
+    margin: 8px;
+}
+
+.ad {
+    background-color: orange;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}

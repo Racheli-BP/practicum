@@ -1,0 +1,25 @@
+.ins {
+    max-width: 60%;
+    max-height: 60%;
+    border: 3px solid rgb(40, 71, 173);
+    margin: auto;
+    padding: 15px;
+    margin-top: 30pt;
+    direction: rtl;
+    display: block;
+}
+
+mat-card-footer {
+    color: orange;
+}
+
+mat-card-content p {
+    margin: 15px;
+    font-size: larger;
+    color: rgb(40, 71, 173);
+}
+mat-card-title{
+    margin-top: 7%;
+    color: orange;
+    font-size: x-large;
+}

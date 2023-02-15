@@ -1,0 +1,96 @@
+<form (ngSubmit)="save()" (ngReset)="cancel()" ngDefaultControl [formControl]="formControl" #form="ngForm">
+
+    <mat-form-field class="field">
+        <mat-label>שם פרטי</mat-label>
+        <input type="text" matInput [formControl]="FnameFormControl" name="fname" [(ngModel)]="current.firstName"
+            required pattern="[A-Za-zא-ת]+" title="אנא הזן אותיות בלבד" />
+        <mat-error *ngIf="FnameFormControl.hasError('required')"> זהו שדה חובה </mat-error>
+        <mat-error *ngIf="FnameFormControl.hasError('pattern')">
+            הכנס שם תקין - אותיות בלבד
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+        <mat-label>שם משפחה</mat-label>
+        <input type="text" matInput [formControl]="LnameFormControl" name="lname" [(ngModel)]="current.lastName"
+            required />
+        <mat-error *ngIf="LnameFormControl.hasError('required')"> זהו שדה חובה </mat-error>
+        <mat-error *ngIf="LnameFormControl.hasError('pattern')">
+            הכנס שם תקין - אותיות בלבד
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="field">
+        <mat-label>מספר זהות</mat-label>
+        <input type="text" matInput [formControl]="TZformControl" name="tz" [(ngModel)]="current.tz" required />
+        <mat-error *ngIf="TZformControl.hasError('required')"> זהו שדה חובה </mat-error>
+        <mat-error *ngIf="TZformControl.hasError('pattern')">
+            הכנס מספר זהות חוקי
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>מגדר</mat-label>
+        <mat-select name="gender" [(ngModel)]="this.current.genderId" required>
+            <mat-option *ngFor="let g of this.genderSer.genders" value={{g.id}}>{{g.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>תאריך לידה</mat-label>
+        <input matInput [matDatepicker]="datepicker" name="bdate" [(ngModel)]="this.current.birthDate" required />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>ביטול</button>
+                <button mat-raised-button color="primary" matDatepickerApply>אישור</button>
+            </mat-datepicker-actions>
+        </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="field">
+        <mat-label>קופת חולים</mat-label>
+        <mat-select name="healthFund" [(ngModel)]="this.current.healthFundId" #healthFund required>
+            <mat-option value="{{x.id}}" *ngFor="let x of healthFundSer.healthFunds">{{x.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <form *ngFor="let x of children,let i=index">
+
+        <mat-form-field class="field">
+            <mat-label>שם הילד</mat-label>
+            <input type="text" matInput [formControl]="CnameFormControls[i]" name="name{{i}}" [(ngModel)]="x.name"
+                required />
+            <mat-error *ngIf="CnameFormControls[i].hasError('required')"> זהו שדה חובה </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <mat-label>מספר זהות</mat-label>
+            <input type="text" matInput [formControl]="CTZFormControls[i]" name="tz{{i}}" [(ngModel)]="x.tz" required />
+            <mat-error *ngIf="CTZFormControls[i].hasError('required')"> זהו שדה חובה </mat-error>
+            <mat-error *ngIf="CTZFormControls[i].hasError('pattern')">
+                הכנס מספר זהות חוקי
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>תאריך לידה</mat-label>
+            <input matInput [matDatepicker]="datepicker" name="bdate{{i}}" [(ngModel)]="x.birthDate" required />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>ביטול</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>אישור</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+
+    </form>
+    <input type="button" mat-flat-button class="ad" (click)="addChild()" value="הוסף ילד" />
+
+    <button mat-raised-button color="primary" class="sub" type="submit">אישור</button>
+    <button mat-raised-button color="primary" class="res" type="reset">ביטול</button>
+
+</form>
