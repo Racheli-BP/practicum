@@ -62,7 +62,7 @@
     </mat-form-field>
 
     <!------------------ טופס הוספת ילד -------------------->
-    <form *ngFor="let x of children,let i=index" #formC="ngForm" >
+    <form *ngFor="let x of children,let i=index" #formC="ngForm">
 
         <mat-form-field class="field">
             <mat-label>שם הילד</mat-label>
@@ -108,3 +108,37 @@
 
 </form>
 
+
+<div style=" margin: auto; width: 50%; display: none;">
+    <table id="excel-table">
+        <tr>
+            <th>שם פרטי</th>
+            <th>שם משפחה</th>
+            <th>מספר זהות</th>
+            <th>מגדר</th>
+            <th>תאריך לידה</th>
+            <th>קופת חולים</th>
+        </tr>
+        <tr>
+            <td>{{current.firstName}}</td>
+            <td>{{current.lastName}}</td>
+            <td>{{current.tz}}</td>
+            <td>{{getCurrentGenderName()}}</td>
+            <td>{{current.birthDate}}</td>
+            <td>{{getCurrentHFName()}}</td>
+            <td>{{current.tz}}</td>
+        </tr>
+        <tr>
+            <td>ילדים:</td>
+
+        </tr>
+        <tr *ngFor="let item of children">
+            <td>{{item.name}}</td>
+            <td>{{current.lastName}}</td>
+            <td>{{item.tz}}</td>
+            <td></td>
+            <td>{{item.birthDate}}</td>
+            <td></td>
+        </tr>
+    </table>
+</div>

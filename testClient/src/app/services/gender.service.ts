@@ -9,6 +9,7 @@ import { Gender } from '../Models/gender';
 export class GenderService {
 
   genders: Gender[];
+  currentGender: Gender[];
 
   baseRouteUrl = `${environment.baseUrl}/Gender`;
 
