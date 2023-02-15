@@ -11,6 +11,7 @@ import { ChildService } from '../services/child.service';
 import { GenderService } from '../services/gender.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-form',
@@ -42,7 +43,6 @@ export class FormComponent implements OnInit {
   }
 
   public async save() {
-
     (await this.personService.addPerson(this.current)).subscribe({
       next: (suc) => {
         this.childSer.addChildren(this.children, suc.id);
@@ -70,8 +70,5 @@ export class FormComponent implements OnInit {
     this.personService.currentUser.next(new Person(0, null, null, null, null, 0, 0));
     this.personService.children.next([]);
   }
-
-
-
 
 }

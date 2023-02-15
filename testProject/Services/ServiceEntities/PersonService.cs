@@ -28,7 +28,7 @@ namespace Services.ServiceEntities
 
 		public async Task<PersonDTO> Add(PersonDTO entity)
 		{
-			if (IsPersonExists(entity))
+			if (await IsPersonExists(entity))
 				throw new Exception("מספר זהות קיים במערכת");
 			else if (!Validations.IsValidTZ(entity.Tz))
 				throw new Exception("מספר זהות לא תקין");
@@ -55,9 +55,9 @@ namespace Services.ServiceEntities
 			return _mapper.Map<PersonDTO>(await _personRepository.Update(_mapper.Map<Person>(entity)));
 		}
 
-		public bool IsPersonExists(PersonDTO entity)
+		public async Task<bool> IsPersonExists(PersonDTO entity)
 		{
-			return _personRepository.GetAll().Result.FirstOrDefault(a => a.Tz == entity.Tz) is Person;
+			return (await _personRepository.GetAll()).FirstOrDefault(a => a.Tz == entity.Tz) is Person;
 		}
 
 	}

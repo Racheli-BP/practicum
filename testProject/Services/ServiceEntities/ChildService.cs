@@ -26,7 +26,7 @@ namespace Services.ServiceEntities
 
 		public async Task<ChildDTO> Add(ChildDTO entity)
 		{
-			if (IsChildExists(entity))
+			if (await IsChildExists(entity))
 				throw new Exception("מספר זהות של הילד " + entity.Name + "קיים במערכת");
 			else if (!Validations.IsValidTZ(entity.Tz))
 				throw new Exception("מספר זהות של הילד " + entity.Name + "לא תקין");
@@ -53,9 +53,9 @@ namespace Services.ServiceEntities
 			return _mapper.Map<ChildDTO>(await _childRepository.Update(_mapper.Map<Child>(entity)));
 		}
 
-		public bool IsChildExists(ChildDTO entity)
+		public async Task<bool> IsChildExists(ChildDTO entity)
 		{
-			return _childRepository.GetAll().Result.FirstOrDefault(a => a.Tz == entity.Tz) is Child;
+			return (await _childRepository.GetAll()).FirstOrDefault(a => a.Tz == entity.Tz) is Child;
 		}
 
 

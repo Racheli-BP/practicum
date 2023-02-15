@@ -1,82 +1,94 @@
-<form (ngSubmit)="save()" (ngReset)="cancel()" ngDefaultControl [formControl]="formControl" #form="ngForm">
+<form (ngSubmit)="save()" (ngReset)="cancel()" #form="ngForm">
 
     <mat-form-field class="field">
         <mat-label>שם פרטי</mat-label>
-        <input type="text" matInput [formControl]="FnameFormControl" name="fname" [(ngModel)]="current.firstName"
-            required pattern="[A-Za-zא-ת]+" title="אנא הזן אותיות בלבד" />
-        <mat-error *ngIf="FnameFormControl.hasError('required')"> זהו שדה חובה </mat-error>
-        <mat-error *ngIf="FnameFormControl.hasError('pattern')">
+        <input type="text" matInput name="fname" #fname="ngModel" [(ngModel)]="current.firstName" required
+            pattern="[A-Za-z א-ת]+" title="אנא הזן אותיות בלבד" />
+        <mat-error *ngIf="fname.touched && fname.errors?.['required']"> זהו שדה חובה </mat-error>
+        <mat-error *ngIf="fname.touched && fname.errors?.['pattern']">
             הכנס שם תקין - אותיות בלבד
         </mat-error>
     </mat-form-field>
 
     <mat-form-field class="field">
         <mat-label>שם משפחה</mat-label>
-        <input type="text" matInput [formControl]="LnameFormControl" name="lname" [(ngModel)]="current.lastName"
-            required />
-        <mat-error *ngIf="LnameFormControl.hasError('required')"> זהו שדה חובה </mat-error>
-        <mat-error *ngIf="LnameFormControl.hasError('pattern')">
+        <input type="text" matInput name="lname" #lname="ngModel" [(ngModel)]="current.lastName" required
+            pattern="[A-Za-z א-ת]+" title="אנא הזן אותיות בלבד" />
+        <mat-error *ngIf="lname.touched && lname.errors?.['required']"> זהו שדה חובה </mat-error>
+        <mat-error *ngIf="lname.touched && lname.errors?.['pattern']">
             הכנס שם תקין - אותיות בלבד
         </mat-error>
     </mat-form-field>
 
     <mat-form-field class="field">
         <mat-label>מספר זהות</mat-label>
-        <input type="text" matInput [formControl]="TZformControl" name="tz" [(ngModel)]="current.tz" required />
-        <mat-error *ngIf="TZformControl.hasError('required')"> זהו שדה חובה </mat-error>
-        <mat-error *ngIf="TZformControl.hasError('pattern')">
+        <input type="text" matInput name="tz" #tz="ngModel" [(ngModel)]="current.tz" required pattern="[0-9]{9}"
+            title="אנא הזן בדיוק 9 ספרות" maxlength="9" minlength="9" />
+        <mat-error *ngIf="tz.touched && tz.errors?.['required']"> זהו שדה חובה </mat-error>
+        <mat-error *ngIf="tz.touched && (tz.errors?.['pattern']||tz.errors?.['minlength']||tz.errors?.['maxlength'])">
             הכנס מספר זהות חוקי
         </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="field">
         <mat-label>מגדר</mat-label>
-        <mat-select name="gender" [(ngModel)]="this.current.genderId" required>
+        <mat-select name="gender" #gender="ngModel" [(ngModel)]="this.current.genderId" required>
             <mat-option *ngFor="let g of this.genderSer.genders" value={{g.id}}>{{g.name}}</mat-option>
         </mat-select>
+        <mat-error *ngIf="gender.touched && gender.errors?.['required']"> זהו שדה חובה </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="field">
         <mat-label>תאריך לידה</mat-label>
-        <input matInput [matDatepicker]="datepicker" name="bdate" [(ngModel)]="this.current.birthDate" required />
+        <input matInput [matDatepicker]="datepicker" name="bdate" #bdate="ngModel" [(ngModel)]="this.current.birthDate"
+            required />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matIconSuffix [for]=" datepicker"></mat-datepicker-toggle>
         <mat-datepicker #datepicker>
             <mat-datepicker-actions>
                 <button mat-button matDatepickerCancel>ביטול</button>
                 <button mat-raised-button color="primary" matDatepickerApply>אישור</button>
             </mat-datepicker-actions>
         </mat-datepicker>
+        <mat-error *ngIf="bdate.touched && bdate.errors?.['required']"> זהו שדה חובה </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="field">
         <mat-label>קופת חולים</mat-label>
-        <mat-select name="healthFund" [(ngModel)]="this.current.healthFundId" #healthFund required>
-            <mat-option value="{{x.id}}" *ngFor="let x of healthFundSer.healthFunds">{{x.name}}</mat-option>
+        <mat-select name="healthFund" #healthFund="ngModel" [(ngModel)]="this.current.healthFundId" required>
+            <mat-option value={{x.id}} *ngFor="let x of healthFundSer.healthFunds">{{x.name}}</mat-option>
         </mat-select>
+        <mat-error *ngIf="healthFund.touched && healthFund.errors?.['required']"> זהו שדה חובה </mat-error>
     </mat-form-field>
 
-    <form *ngFor="let x of children,let i=index">
+    <!------------------ טופס הוספת ילד -------------------->
+    <form *ngFor="let x of children,let i=index" #formC="ngForm" >
 
         <mat-form-field class="field">
             <mat-label>שם הילד</mat-label>
-            <input type="text" matInput [formControl]="CnameFormControls[i]" name="name{{i}}" [(ngModel)]="x.name"
-                required />
-            <mat-error *ngIf="CnameFormControls[i].hasError('required')"> זהו שדה חובה </mat-error>
+            <input type="text" matInput name="nameC" #nameC="ngModel" [(ngModel)]="x.name" required
+                pattern="[A-Za-zא-ת]+" title="אנא הזן אותיות בלבד" />
+            <mat-error *ngIf="nameC.touched && nameC.errors?.['required']"> זהו שדה חובה </mat-error>
+            <mat-error *ngIf="nameC.touched && nameC.errors?.['pattern']">
+                הכנס שם תקין - אותיות בלבד
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="field">
             <mat-label>מספר זהות</mat-label>
-            <input type="text" matInput [formControl]="CTZFormControls[i]" name="tz{{i}}" [(ngModel)]="x.tz" required />
-            <mat-error *ngIf="CTZFormControls[i].hasError('required')"> זהו שדה חובה </mat-error>
-            <mat-error *ngIf="CTZFormControls[i].hasError('pattern')">
+            <input type="text" matInput name="tzC" #tzC="ngModel" [(ngModel)]="x.tz" required pattern="[0-9]{9}"
+                title="אנא הזן בדיוק 9 ספרות" maxlength="9" minlength="9" />
+            <mat-error *ngIf="tzC.touched && tzC.errors?.['required']"> זהו שדה חובה </mat-error>
+            <mat-error
+                *ngIf="tzC.touched && (tzC.errors?.['pattern']||tzC.errors?.['minlength']||tzC.errors?.['maxlength'])">
                 הכנס מספר זהות חוקי
             </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="field">
             <mat-label>תאריך לידה</mat-label>
-            <input matInput [matDatepicker]="datepicker" name="bdate{{i}}" [(ngModel)]="x.birthDate" required />
+            <input matInput [matDatepicker]="datepicker" name="bdateC" #bdateC="ngModel" [(ngModel)]="x.birthDate"
+                required />
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker>
@@ -85,12 +97,14 @@
                     <button mat-raised-button color="primary" matDatepickerApply>אישור</button>
                 </mat-datepicker-actions>
             </mat-datepicker>
+            <mat-error *ngIf="bdateC.touched && bdateC.errors?.['required']"> זהו שדה חובה </mat-error>
         </mat-form-field>
 
     </form>
     <input type="button" mat-flat-button class="ad" (click)="addChild()" value="הוסף ילד" />
 
-    <button mat-raised-button color="primary" class="sub" type="submit">אישור</button>
+    <button mat-raised-button color="primary" type="submit" class="sub" [disabled]="form.invalid">אישור</button>
     <button mat-raised-button color="primary" class="res" type="reset">ביטול</button>
 
 </form>
+

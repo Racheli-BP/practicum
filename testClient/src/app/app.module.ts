@@ -16,18 +16,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 import { NavbarComponent } from './navbar/navbar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     InstructionsComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatCardModule,
     MatDividerModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CommonModule,
+    SpreadSheetsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

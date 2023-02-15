@@ -10,6 +10,7 @@ mat-form-field {
     direction: rtl;
 }
 
+ng-form,
 form {
     width: max-content;
     min-width: 30vw;
@@ -31,7 +32,8 @@ form {
     background-color: orange;
 }
 
-form form {
+form form,
+ng-form form {
     margin: 8px;
 }
 
