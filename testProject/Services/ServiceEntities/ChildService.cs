@@ -56,13 +56,6 @@ namespace Services.ServiceEntities
 		public bool IsChildExists(ChildDTO entity)
 		{
 			return _childRepository.GetAll().Result.FirstOrDefault(a => a.Tz == entity.Tz) is Child;
-
-			//var c = _childRepository.GetAll().Result.SingleOrDefault(a => a.Tz == entity.Tz);
-			//if (c is Child)
-			//	if (c.Parent.GenderId == _mapper.Map<Child>(entity).Parent.GenderId)
-			//		// מכיון שיתכן להכניס ילד גם דרך אבא וגם דרך אמא
-			//		return true;
-			//return false;
 		}
 
 
